@@ -1,0 +1,37 @@
+bt_sim:
+  gui: False
+  gripper_force: 10
+  scene: random
+
+hw:
+  roi_calib_file: $(find active_grasp)/cfg/hw/T_base_tag.txt
+  # roi_calib_file: $(find active_grasp)/cfg/hw/T_base_tag_325.txt
+  scene_file: $(find active_grasp)/cfg/hw/scene01.yaml
+
+grasp_controller:
+  base_frame_id: panda_link0
+  ee_grasp_offset: [0.0, 0.0, -0.383, 0.924, 0.05, 0.0, -0.1]  # offset to panda_link8
+  control_rate: 30
+  linear_vel: 0.05
+  camera:
+    frame_id: camera_depth_optical_frame
+    info_topic: /camera/depth/camera_info
+    depth_topic: /camera/depth/image_rect_raw
+    min_z_dist: 0.3
+
+cartesian_velocity_controller:
+  topic: /cartesian_velocity_controller/set_command
+
+vgn:
+  model: $(find vgn)/assets/models/vgn_conv.pth
+  finger_depth: 0.05
+  qual_threshold: 0.9
+
+policy:
+  rate: 4
+  window_size: 12
+
+nbv_grasp:
+  max_views: 80
+  min_gain: 10
+  downsample: 20  # 10/20 for sim/hw respectively

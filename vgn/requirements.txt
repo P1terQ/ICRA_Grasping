@@ -1,0 +1,15 @@
+black
+catkin_pkg
+# mayavi
+mpi4py
+numpy
+open3d
+pandas
+pybullet
+pytorch-ignite
+pyyaml
+scikit-image
+scipy
+tensorboard
+torch
+tqdm

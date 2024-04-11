@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>robot_helpers</name>
+    <version>0.1.0</version>
+    <description>TODO</description>
+
+    <maintainer email="mbreyer@ethz.ch">Michel Breyer</maintainer>
+
+    <license>TODO</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <depend>geometry_msgs</depend>
+    <depend>kdl_parser_py</depend>
+    <depend>rospy</depend>
+    <depend>sensor_msgs</depend>
+    <depend>shape_msgs</depend>
+    <depend>std_msgs</depend>
+    <depend>tf2_ros</depend>
+    <depend>urdf_parser_py</depend>
+</package>

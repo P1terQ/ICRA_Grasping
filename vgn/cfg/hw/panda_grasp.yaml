@@ -1,0 +1,24 @@
+panda_grasp:
+  task_frame_id: task
+  base_frame_id: panda_link0
+  ee_frame_id: panda_link8
+  ee_grasp_offset: [0.0, 0.0, -0.382, 0.924, 0.0, 0.0, 0.066]
+  scan_joints:
+    - [0.010, -1.479, 0.100, -2.416, 0.089, 1.402, 0.851]
+    - [-0.520, -0.796, 0.912, -1.672, 0.091, 1.281, 0.871]
+    - [0.032, 0.4595, 0.074, -0.839, 0.015, 0.777, 0.833]
+    - [0.092, -0.626, -0.551, -1.837, 0.165, 1.238, 0.900]
+
+tsdf_server:
+  frame_id: task
+  length: 0.3
+  resolution: 40
+  depth_scaling: 0.001  # Set to 1.0 for Gazebo, 0.001 for a RealSense
+  camera:
+    frame_id: wrist_camera_depth_optical_frame
+    info_topic: /wrist_camera/depth/camera_info
+    depth_topic: /wrist_camera/depth/image_rect_raw
+
+vgn_server:
+  frame_id: task
+  model: $(find vgn)/assets/models/vgn_conv.pth

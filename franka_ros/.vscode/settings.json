@@ -1,0 +1,16 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/peter/robot/grasping/franka_325/devel/lib/python3/dist-packages",
+        "/usr/local/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/usr/local/lib/python2.7/site-packages",
+        "/home/peter/robot/text/underactuated"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/peter/robot/grasping/franka_325/devel/lib/python3/dist-packages",
+        "/usr/local/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/usr/local/lib/python2.7/site-packages",
+        "/home/peter/robot/text/underactuated"
+    ]
+}

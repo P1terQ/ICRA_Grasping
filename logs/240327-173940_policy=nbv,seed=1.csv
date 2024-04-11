@@ -1,0 +1,2 @@
+result,view_count,distance,search_time,state_update,tsdf_integration,grasp_prediction,grasp_selection,view_generation,ig_computation,cost_computation,grasp_time
+no_motion_plan_found,12,0.6858855311025596,22.473166304989718,0.7927223709557438,0.07678915702854283,0.6018241179699544,0.03511428800993599,0.28914763899229,19.8022396369779,0.00029272501706145704,120.91253181100183
