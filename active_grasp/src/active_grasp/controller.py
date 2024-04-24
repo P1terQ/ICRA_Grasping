@@ -144,6 +144,8 @@ class GraspController:
         self.pc = PandaCommander(group_name='panda_arm')
         self.robot_state = None
         self.ROBOT_ERROR_DETECTED = False
+
+        # self.need_avoid = False
         
     
     def __recover_robot_from_error(self):
@@ -217,6 +219,27 @@ class GraspController:
     def run(self):
         self.pc.recover()
         
+
+        q_place = np.asarray([1.024924061756385, 0.6902756068581029, 0.23736947749162976, -1.5500040081760835, -0.15436248639557096, 2.2270590113004047, 0.5123070080164406])   # 初始位置
+        # 判断当前机械臂关节位置和q_place是否相近
+
+        # 获取当前关节位置
+        joint_positions_now = self.arm.get_state()[0]
+
+        # 计算q_place和joint_position_now之前的差值的范数
+        diff_norm = np.linalg.norm(joint_positions_now - q_place)
+
+
+        if diff_norm<0.5:
+        
+            #! 一开始会报错can't accept new action goals. Controller is not running
+            joint_mid_avoid = np.asarray([0.8081277828028325, 0.31377393442264456, 0.4676299028856712, -1.1309202249160595, -0.08720591376124719, 1.391054532332668, 0.8837474233436782])   # 初始位置
+            successavoid, planavoid = self.moveit.plan(joint_mid_avoid, 0.1, 0.1) 
+            self.moveit.execute(planavoid)
+            # self.need_avoid = False
+            # self.moveit.execute(plan1)
+    # 0.8081277828028325, 0.31377393442264456, 0.4676299028856712, -1.1309202249160595, -0.08720591376124719, 1.391054532332668, 0.8837474233436782
+
         joint_mid = np.asarray([-0.012278128726616162, -0.7834047260627022, -0.0008402333314644925, -2.3615974901829904, -0.015725505022539034, 1.5662728869946938, 0.7658006468498042])   # 初始位置
         success, plan1 = self.moveit.plan(joint_mid, 0.1, 0.1) 
         self.moveit.execute(plan1)
@@ -397,19 +420,34 @@ class GraspController:
             # self.pc.goto_named_pose('grip_ready', velocity=0.25)
 
 
+            placeA = np.asarray([0.024383024292818287, -0.2622615840351372, 0.03071162108569362, -2.0385405393901626, -0.014837411449187328, 1.8307929479296123, 0.7456546647372213])   # 初始位置
+            successA, planA = self.moveit.plan(placeA, 0.1, 0.1) 
+            self.moveit.execute(planA)
+
+            placeB = np.asarray([0.4877395607135449, -0.051506965049722436, 0.4795486804121064, -1.6267091484917113, 0.10096644302871491, 1.591474315166473, 0.9616774624771905])   # 初始位置
+            successB, placeB = self.moveit.plan(placeB, 0.1, 0.1) 
+            self.moveit.execute(placeB)
+
+            placeC = np.asarray([1.024924061756385, 0.6902756068581029, 0.23736947749162976, -1.5500040081760835, -0.15436248639557096, 2.2270590113004047, 0.5123070080164406])   # 初始位置
+            successC, placeC = self.moveit.plan(placeC, 0.1, 0.1) 
+            self.moveit.execute(placeC)
             #? 
             # self.pc.goto_named_pose('drop_box', velocity=0.25)
-            place= np.asarray([0.8338639966099323, 0.7813643499006305, 0.6722988716175682, -1.6374551276209672, -0.6227699804272917, 2.1757760300636293, 0.5606248298370176])   # 初始位置
-            success, plan1 = self.moveit.plan(place, 0.1, 0.1) 
-            self.moveit.execute(plan1)
+            # place= np.asarray([0.8338639966099323, 0.7813643499006305, 0.6722988716175682, -1.6374551276209672, -0.6227699804272917, 2.1757760300636293, 0.5606248298370176])   # 初始位置
+            # success, plan1 = self.moveit.plan(place, 0.1, 0.1) 
+            # self.moveit.execute(plan1)
 
             self.gripper.move(0.1)  # 开爪子
+
+            # self.need_avoid = True
+
             # self.pc.goto_named_pose('grip_ready', velocity=0.25)
             return "succeeded" if success else "failed"
         else:
             self.pc.recover()
             self.pc.goto_named_pose('grip_ready', velocity=0.25)
             return "no_motion_plan_found"
+        
 
     def create_collision_scene(self):
         # Segment support surface
